@@ -933,6 +933,7 @@
  .main-menu ul>li:nth-child (6) {
      padding-right: 0px;
 }
+
  .nav>li {
      position: inherit;
      display: inline-block;
@@ -1783,4 +1784,58 @@
      text-align: center;
 }
 /** slider arrow **/
+
+/* Grid */
+
+.axis {
+    --c: 100;
+    --cx: 50;
+    --cy: 50;
+    --dsize: 5;
+    --dcolor: #369;
+    --size: 100%;
+    position: relative;
+    width: var(--size);
+    height: var(--size) / 2;
+    box-sizing: border-box;
+    aspect-ratio: 1/1;
+    background-image:
+      linear-gradient(#0000 calc(var(--cy) * 100% / var(--c) - 1px), #0008 0 calc(var(--cy) * 100% / var(--c) + 1px), transparent 0),
+      linear-gradient(to right, #0000 calc(var(--cx) * 100% / var(--c) - 1px), #0008 0 calc(var(--cx) * 100% / var(--c) + 1px), transparent 0),
+      repeating-linear-gradient(#0002 0 0.5px, #0000 0 calc(100% / var(--c) - 0.5px), #0002 0 calc(100% / var(--c))),
+      repeating-linear-gradient(to right, #0002 0 0.5px, #0000 0 calc(100% / var(--c) - 0.5px), #0002 0 calc(100% / var(--c)));
+  }
+  
+  .axis.no-overflow {
+    overflow: hidden;
+  }
+  
+  .dot {
+    --translationUnit: 100% / var(--c);
+    --translationX: var(--translationUnit) * var(--cx);
+    --translationY: var(--translationUnit) * var(--cy);
+
+    /* Vertical is "flipped" in CSS: higher values go down! Do negative! */
+    --y: calc(var(--translationY) - var(--translationUnit) * var(--function));
+    width: calc(var(--dsize) * 0.5 px);
+    height: calc(var(--dsize) * 1px);
+    background: var(--dcolor);
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: calc(var(--translationX) + var(--x) * var(--translationUnit));
+    top: var(--y);
+  }
+  
+  /* Demo functions */
+  #axis_x-3 {
+    --size: 100%;
+  }
+  #axis_x-3 .dot {
+    /**
+     * f(x) = x - 3
+     *        x = var(--x)
+     */
+    --function: calc(var(--x) - 3);
+  }
  
